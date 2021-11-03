@@ -1,15 +1,25 @@
 pipeline {
+    
     agent any
+
     stages {
+
         stage('Build') {
+        
             steps {
-                sh 'echo "My hello world :P!!!"'
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
+                
+                writeFile file: 'test-result.txt' , text : 'Passed'
+                archiveArtifacts 'test-result.txt'
+        
             }
+
+        }
+
+    }
+
+    post{
+        success{
+            echo 'Sending email confirmation ...!!!'
         }
     }
 }
